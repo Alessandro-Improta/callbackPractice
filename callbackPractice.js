@@ -30,6 +30,11 @@ first(names, function(firstName){
   console.log('The first name in names is ' + firstName)
 });
 
+function first (arr, cb) {
+  var firstName = arr[0];
+  cb(firstName);
+}
+
 
 
 // 2. Write a function called last which returns the last item of the array using a callback function.
@@ -40,6 +45,10 @@ last(names, function(lastName){
   console.log('The last name in names is ' + lastName);
 });
 
+function last (arr, cb) {
+  var lastName = arr[arr.length-1];
+  cb(lastName);
+}
 
 
 // 3. Write a function called multiply that multiplies two numbers using a callback function.
@@ -50,6 +59,11 @@ last(names, function(lastName){
 multiply(4, 3, function(answer){
   console.log('The answer is ' + answer); //should console.log 12
 })
+
+function multiply (num1, num2, cb) {
+  var answer = num1 * num2;
+  cb(answer);
+}
 
 
 
@@ -66,6 +80,11 @@ contains(names, 'Colt', function(result){
   }
 });
 
+function contains (arr, arrEl, cb) {
+  var result = arr.includes(arrEl);
+  cb(result);
+}
+
 
 
 // 5. Write a function called uniq that takes the names array and removes all duplicates and returns 
@@ -77,6 +96,18 @@ uniq(names, function(uniqArr){
   console.log('The new names array with all the duplicate items removed is ', uniqArr);
 });
 
+function uniq(arr, cb) {
+var uniqArr = arr.slice(0);
+for (var i = 0; i < uniqArr.length - 1; i++) {
+  for (var j = i + 1; j < uniqArr.length; j++) {
+    if (uniqArr[i] === uniqArr[j]) {
+      uniqArr.splice(j, 1);
+    }
+  }
+}
+cb(uniqArr);
+}
+
 
 // 6. Write a function called each that takes in an array of names. For each item, use a callback 
 // function to return the indices and item.
@@ -86,6 +117,12 @@ uniq(names, function(uniqArr){
 each(names, function(item, indice){
   console.log('The item in the ' + indice + ' position is ' + item)
 });
+
+function each(arr, cb) {
+  for(var i = 0; i < arr.length; i++){
+    cb(arr[i], i);
+  }
+}
 
 
 
@@ -118,3 +155,18 @@ var users = [
 getUserById(users, '16t', function(user){
   console.log('The user with the id 16t has the email of ' + user.email + ' the name of ' + user.name + ' and the address of ' + user.address); 
 });
+
+function getUserById(arr, str, cb) {
+  
+  function findUser () { 
+    for(var i = 0; i < arr.length; i++) {
+      if (arr[i].id === str) {
+        return arr[i];
+      }
+    }
+  }
+
+  var user = findUser();
+
+  cb(user);
+}
